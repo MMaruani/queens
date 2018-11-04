@@ -1,0 +1,27 @@
+.queens >.box {
+    flex: 1 1 calc(100% / 8 - 0.4em);
+    height: calc(100% / 8 - 0.4em);
+    outline: 0.08em solid silver;
+    margin: 0.2em;
+    display: block;
+    cursor: default;
+    position: relative;
+    background: white;
+    cursor: pointer;
+  }
+
+  .queens  .box.black {
+    background: black;
+  }
+  .queens  .box.red {
+    background: red !important;
+  }
+  .queens  .box span {
+     position: absolute;
+     text-align: center;
+     width: 100%;
+  }
+  .queens  .box.black span {
+    color:#fff;
+
+ }
