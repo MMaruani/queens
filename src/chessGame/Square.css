@@ -1,4 +1,4 @@
-.queens >.box {
+.chessboard >.square {
     flex: 1 1 calc(100% / 8 - 0.4em);
     height: calc(100% / 8 - 0.4em);
     outline: 0.08em solid silver;
@@ -8,20 +8,24 @@
     position: relative;
     background: white;
     cursor: pointer;
+    box-sizing: border-box;
   }
 
-  .queens  .box.black {
+  .chessboard  .square.black {
     background: black;
   }
-  .queens  .box.red {
-    background: red !important;
+  .chessboard  .square.red {
+    border: 3px solid  red;
   }
-  .queens  .box span {
+  .chessboard  .square span {
      position: absolute;
+     top: 3px;
      text-align: center;
      width: 100%;
   }
-  .queens  .box.black span {
+  .chessboard  .square.black span {
     color:#fff;
-
  }
+ .chessboard  .square.red span{
+    top: 0;
+  }

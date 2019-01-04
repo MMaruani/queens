@@ -12,3 +12,13 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.chess_button_list li {
+  list-style: none;
+  float: left;
+}
+.piece_choice_button {
+  width: 30px;
+  text-align: center;
+  font-size: 16px;
+}
