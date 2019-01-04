@@ -63,19 +63,17 @@ types = Object.keys(this.chessmen)
 
     this.setState({squares:newSquares})
   }
-  // const uids =[...new Set(ids)];
-    //this.newSquares = newSquares.map((box) => ids.includes(square.id) ?  Object.assign(square,{conflict:true}) : square)
-    
+
   sameDiagonale = (square, otherSquare) => (Math.abs(square.col - otherSquare.col) === Math.abs(square.row - otherSquare.row))
   sameColRow =  (square, otherSquare) => (square.col === otherSquare.col ||  square.row === otherSquare.row)
   knightDist =  (square, otherSquare) => (Math.abs(square.col - otherSquare.col) === 1 && Math.abs(square.row - otherSquare.row) ===2)
                                       ||  (Math.abs(square.col - otherSquare.col) === 2 && Math.abs(square.row - otherSquare.row) ===1)
- 
+
   isConflictPiece = (square, pieceSquares) =>
   pieceSquares.some((otherSquare) =>
       (otherSquare.id !== square.id) && this.conflictCondition(square, otherSquare)
   )
- 
+
   conflictCondition = (square, otherSquare) => {
     switch (this.state.pieceType) {
       case this.chessmen.knight :
@@ -89,22 +87,21 @@ types = Object.keys(this.chessmen)
           return  (this.sameDiagonale(square, otherSquare) || this.sameColRow(square, otherSquare))
     }
   }
- 
 
   render() {
     return (
       <div>
        <div><ButtonList
            pieceTypes={this.types}
-           selectType={this.selectType} />
-       </div> 
+           selectType={this.selectType}
+           selectedType={this.state.pieceType} />
+       </div>
        <div><ChessBoard
-           squares={this.state.squares} 
-           pieceType={this.state.pieceType} 
+           squares={this.state.squares}
+           pieceType={this.state.pieceType}
            handleSquareClick={this.handleSquareClick} />
        </div>
       </div>
-      
     )
   }
 }

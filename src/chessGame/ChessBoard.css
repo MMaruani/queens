@@ -1,0 +1,19 @@
+.chessboard {
+    display: flex;
+    flex-wrap: wrap;
+    width: 300px;
+    height: 300px;
+    margin: auto;
+    user-select: none;
+  }
+
+  .chess_button_list li button{
+    background: none;
+    border: none;
+    outline: none;
+}
+
+  .chess_button_list li.active button{
+      background: #000;
+      color: #fff;
+  }

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import Square from './Square'
 
+import './ChessBoard.css'
+
 
 
 class ChessBoard extends Component {
