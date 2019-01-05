@@ -7,7 +7,7 @@ const QueensRules = () => (
 
   <p>Est-il possible de placer 8 reines sur l'échiquier sans qu'elles n'entrent en conflit ?
   </p><p> Ce problème a été posé par Carl Friedrich Gauss en 1842.
-  </p><p>   La réponse est oui. Il avait trouvé à l'époque 72 solutions, l'algorythmie permet aujourd'hui d'en trouver 92, vraiment distinctes, c'est à dire sans compter les solutions symétriques, lorsqu'on tourne l'échiquier par exemple.
+  </p><p>   La réponse est oui. Il avait trouvé à l'époque 72 solutions, l'algorithmique permet aujourd'hui d'en trouver 92, vraiment distinctes, c'est à dire sans compter les solutions symétriques, lorsqu'on tourne l'échiquier par exemple.
   </p><p>   Voici un échiquier permettant de s'amuser à placer les 8 reines.
   <br/> Dès qu'elles entrent en conflit, les cases se bordent de rouge.
   </p><p><em> Une reine entre en conflit avec  les pièces de l'échiquier qui sont sur la même ligne, même colonne, ou même diagonale.</em>
