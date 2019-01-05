@@ -18,6 +18,7 @@
   }
 
   .chess_button_list li button{
+    text-align: center;
     background: none;
     border: none;
     outline: none;
@@ -30,7 +31,8 @@
 
  
   .piece_choice_button {
-    width: 30px;
     text-align: center;
-    font-size: 16px;
+    font-size: 20px;
+    padding-right: 10px;
+    padding-left: 10px;
   }

@@ -19,13 +19,14 @@
   }
   .chessboard  .square span {
      position: absolute;
-     top: 3px;
+     top: 1px;
      text-align: center;
      width: 100%;
+     font-size: 20px;
   }
   .chessboard  .square.black span {
     color:#fff;
  }
  .chessboard  .square.red span{
-    top: 0;
+    top: -2px;
   }
