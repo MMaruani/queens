@@ -1,0 +1,14 @@
+section {
+    padding-right: 20px;
+    padding-left: 20px;
+}
+.rules {
+    margin: auto;
+    max-width: 600px;
+}
+.rules p {
+    font-size: 12px;
+}
+p.center {
+    text-align: center;
+}

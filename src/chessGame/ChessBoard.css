@@ -7,6 +7,16 @@
     user-select: none;
   }
 
+  .chess_button_list {
+    text-align: center;
+    padding: 0;
+  }
+
+  .chess_button_list li {
+    list-style: none;
+    display: inline-block;
+  }
+
   .chess_button_list li button{
     background: none;
     border: none;
@@ -16,4 +26,11 @@
   .chess_button_list li.active button{
       background: #000;
       color: #fff;
+  }
+
+ 
+  .piece_choice_button {
+    width: 30px;
+    text-align: center;
+    font-size: 16px;
   }

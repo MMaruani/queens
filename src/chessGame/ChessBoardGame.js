@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 
-
 import ChessBoard from './ChessBoard'
 
 import ButtonList from "./ButtonList"
+
+import QueensRules from "./QueensRules"
 
 
 
@@ -17,20 +18,17 @@ class ChessBoardGame extends Component {
     this.defaultState = {squares: this.generateSquares(), pieceType: "queen"}
     this.state = this.defaultState
     this.selectType.bind(this)
-}
+  }
 
-chessmen = {
-  queen : "queen",
-  bishop : "bishop",
-  rock : "rock",
-  knight : "knight",
-}
+  chessmen = {
+    queen : "queen",
+    bishop : "bishop",
+    rock : "rock",
+    knight : "knight",
+  }
 
-selectType = (type) => {
-  this.setState( {...this.defaultState, pieceType:type})
-}
+  types = Object.keys(this.chessmen)
 
-types = Object.keys(this.chessmen)
 
   generateSquares() {
     const result = []
@@ -42,6 +40,10 @@ types = Object.keys(this.chessmen)
       result.push ({ row: row, col:col, color: result.length % 2 === n ? "": "black", hasPiece:false, conflict:false, id:result.length})
     }
     return result
+  }
+
+  selectType = (type) => {
+    this.setState( {...this.defaultState, pieceType:type})
   }
 
   handleSquareClick = (id) =>  {
@@ -91,16 +93,19 @@ types = Object.keys(this.chessmen)
   render() {
     return (
       <div>
-       <div><ButtonList
+       <section><ButtonList
            pieceTypes={this.types}
            selectType={this.selectType}
            selectedType={this.state.pieceType} />
-       </div>
-       <div><ChessBoard
+       </section>
+       <section><ChessBoard
            squares={this.state.squares}
            pieceType={this.state.pieceType}
            handleSquareClick={this.handleSquareClick} />
-       </div>
+       </section>
+       <section>
+         <QueensRules/>
+       </section>
       </div>
     )
   }
