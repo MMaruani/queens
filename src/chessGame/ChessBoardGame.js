@@ -4,6 +4,8 @@ import ChessBoard from './ChessBoard'
 
 import ButtonList from "./ButtonList"
 
+import ResetButton from "./ResetButton"
+
 import QueensRules from "./QueensRules"
 
 
@@ -40,6 +42,10 @@ class ChessBoardGame extends Component {
       result.push ({ row: row, col:col, color: result.length % 2 === n ? "": "black", hasPiece:false, conflict:false, id:result.length})
     }
     return result
+  }
+
+  resetChessBoard = () => {
+    this.setState((prevState) => ({...this.defaultState, pieceType:prevState.pieceType}))
   }
 
   selectType = (type) => {
@@ -93,10 +99,13 @@ class ChessBoardGame extends Component {
   render() {
     return (
       <div>
-       <section><ButtonList
-           pieceTypes={this.types}
-           selectType={this.selectType}
-           selectedType={this.state.pieceType} />
+       <section className="button_section">
+           <ButtonList
+              pieceTypes={this.types}
+              selectType={this.selectType}
+              selectedType={this.state.pieceType} />
+            <ResetButton
+              resetChessBoard={this.resetChessBoard} />
        </section>
        <section><ChessBoard
            squares={this.state.squares}
