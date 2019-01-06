@@ -10,10 +10,11 @@ import {getSymbol} from "./common"
 
 
 
-const Square = ({col, row, color, pieceType, hasPiece, conflict, id, onClick }) => (
+const Square = ({col, row, color, pieceType, hasPiece, conflict, valid, id, onClick }) => (
   <div className={`square ${color} ${conflict?"red":""}`} onClick={() => onClick(id)}>
     <span>
-      {hasPiece ? getSymbol(pieceType) : ""}
+      
+      {valid ? (hasPiece ? getSymbol(pieceType) : "") : "x"}
     </span>
   </div>
 )

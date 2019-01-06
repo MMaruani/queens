@@ -12,7 +12,7 @@ class ChessBoard extends Component {
   render() {
     return (
       <div className="chessboard">
-       {this.props.squares.map(({row, col, color, hasPiece, conflict, id}) => (
+       {this.props.squares.map(({row, col, color, hasPiece, conflict, valid, id}) => (
           <Square
             row = {row}
             col = {col}
@@ -20,6 +20,7 @@ class ChessBoard extends Component {
             conflict = {conflict}
             pieceType = {this.props.pieceType}
             hasPiece = {hasPiece}
+            valid = {valid}
             id = {id}
             key = {id}
             onClick = {this.props.handleSquareClick}

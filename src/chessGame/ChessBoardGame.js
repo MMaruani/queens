@@ -6,6 +6,8 @@ import ButtonList from "./ButtonList"
 
 import ResetButton from "./ResetButton"
 
+import HelpButton from "./HelpButton"
+
 import QueensRules from "./QueensRules"
 
 
@@ -17,7 +19,7 @@ class ChessBoardGame extends Component {
 
   constructor(props) {
     super(props)
-    this.defaultState = {squares: this.generateSquares(), pieceType: "queen"}
+    this.defaultState = {squares: this.generateSquares(), pieceType: "queen", helpMode:false}
     this.state = this.defaultState
     this.selectType.bind(this)
   }
@@ -39,38 +41,48 @@ class ChessBoardGame extends Component {
       const row = Math.floor(result.length / SIDE)
       const col = result.length % SIDE
       const n =  row % 2  === 0 ? 0 : 1
-      result.push ({ row: row, col:col, color: result.length % 2 === n ? "": "black", hasPiece:false, conflict:false, id:result.length})
+      result.push ({ row: row, col:col, color: result.length % 2 === n ? "": "black", hasPiece:false, conflict:false, valid:true, id:result.length})
     }
     return result
   }
 
   resetChessBoard = () => {
-    this.setState((prevState) => ({...this.defaultState, pieceType:prevState.pieceType}))
+    this.setState((prevState) => ({...this.defaultState, pieceType:prevState.pieceType, helpMode:prevState.helpMode}))
+  }
+  help = () => {
+    this.setState((prevState) => ({helpMode: !prevState.helpMode}),
+      () => {this.handleSquareClick()})
   }
 
   selectType = (type) => {
-    this.setState( {...this.defaultState, pieceType:type})
+    this.setState((prevState) => ({...this.defaultState, pieceType:type, helpMode:prevState.helpMode}))
   }
 
   handleSquareClick = (id) =>  {
-
     const newSquares = this.state.squares.map( square =>  {
       //in order to toggle the piece on click
-      let hasPiece = square.id === id ? !square.hasPiece: square.hasPiece
+      let hasPiece = (id !== null && square.id === id) ? !square.hasPiece: square.hasPiece
       //+ we remove all conflicts
-      return {...square, conflict: false, hasPiece: hasPiece}
+      return {...square, conflict: false, hasPiece: hasPiece, valid:true}
     } )
-
+    //the squares with pieces
     const pieceSquares = newSquares.filter(({hasPiece}) => hasPiece === true)
-
+    //we check each others
     pieceSquares.forEach(square => {
       if(this.isConflictPiece(square, pieceSquares)) {
-        newSquares.find(({id}) => id === square.id).conflict = true
+        newSquares.find((newSquare) => newSquare.id === square.id).conflict = true
       }
     });
-
+    //the squares without pieces
+    if(this.state.helpMode === true) {
+      const emptySquares = newSquares.filter(({hasPiece}) => hasPiece === false)
+        pieceSquares.forEach(square => {
+          this.markBusySquares(square, emptySquares);
+        });
+    }
     this.setState({squares:newSquares})
   }
+
 
   sameDiagonale = (square, otherSquare) => (Math.abs(square.col - otherSquare.col) === Math.abs(square.row - otherSquare.row))
   sameColRow =  (square, otherSquare) => (square.col === otherSquare.col ||  square.row === otherSquare.row)
@@ -80,6 +92,14 @@ class ChessBoardGame extends Component {
   isConflictPiece = (square, pieceSquares) =>
   pieceSquares.some((otherSquare) =>
       (otherSquare.id !== square.id) && this.conflictCondition(square, otherSquare)
+  )
+
+  markBusySquares = (square, emptySquares) =>
+    emptySquares.map((otherSquare) => {
+      if(this.conflictCondition(square, otherSquare)) {
+        otherSquare.valid = false;
+      }
+    }
   )
 
   conflictCondition = (square, otherSquare) => {
@@ -106,6 +126,9 @@ class ChessBoardGame extends Component {
               selectedType={this.state.pieceType} />
             <ResetButton
               resetChessBoard={this.resetChessBoard} />
+            <HelpButton
+              help={this.help} 
+              status = {this.state.helpMode ? "active" : ""}/>
        </section>
        <section><ChessBoard
            squares={this.state.squares}
