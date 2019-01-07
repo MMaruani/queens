@@ -10,16 +10,21 @@ import HelpButton from "./HelpButton"
 
 import QueensRules from "./QueensRules"
 
+import SolutionButton from "./SolutionButton"
+
+import {getRandomElement, getMax} from "./common"
 
 
 const SIDE = 8
+
 
 
 class ChessBoardGame extends Component {
 
   constructor(props) {
     super(props)
-    this.defaultState = {squares: this.generateSquares(), pieceType: "queen", helpMode:false}
+    this.defaultSquares = this.generateSquares();
+    this.defaultState = {squares: this.defaultSquares, pieceType: "queen", helpMode:false}
     this.state = this.defaultState
     this.selectType.bind(this)
   }
@@ -33,7 +38,6 @@ class ChessBoardGame extends Component {
 
   types = Object.keys(this.chessmen)
 
-
   generateSquares() {
     const result = []
     const size = SIDE * SIDE
@@ -45,7 +49,6 @@ class ChessBoardGame extends Component {
     }
     return result
   }
-
   resetChessBoard = () => {
     this.setState((prevState) => ({...this.defaultState, pieceType:prevState.pieceType, helpMode:prevState.helpMode}))
   }
@@ -53,31 +56,47 @@ class ChessBoardGame extends Component {
     this.setState((prevState) => ({helpMode: !prevState.helpMode}),
       () => {this.handleSquareClick()})
   }
+  getRandomSolution = () => {
+    this.automaticSolution(this.getNewSquares())
+  }
 
   selectType = (type) => {
     this.setState((prevState) => ({...this.defaultState, pieceType:type, helpMode:prevState.helpMode}))
   }
 
+  getNewSquares = () => (this.defaultSquares.map((square) => ({...square})))
+
+  resetSquares = (squares) => squares.map((square) => {
+    square.hasPiece = false
+    square.conflict = false
+    square.valid = true
+    return square
+  })
+
   handleSquareClick = (id) =>  {
+    //we don't want to mute defaultSate.squares,
+    //so we get o copy of the actual state squares with new referencies
     const newSquares = this.state.squares.map( square =>  {
       //in order to toggle the piece on click
       let hasPiece = (id !== null && square.id === id) ? !square.hasPiece: square.hasPiece
       //+ we remove all conflicts
-      return {...square, conflict: false, hasPiece: hasPiece, valid:true}
+      return {...square, conflict: false, hasPiece: hasPiece, valid: true}
     } )
     //the squares with pieces
     const pieceSquares = newSquares.filter(({hasPiece}) => hasPiece === true)
-    //we check each others
+    //we check each others if they are in conflict
     pieceSquares.forEach(square => {
       if(this.isConflictPiece(square, pieceSquares)) {
-        newSquares.find((newSquare) => newSquare.id === square.id).conflict = true
+        //square is a newSquares' reference element,
+        //so newSquares conflict elts will be set as conflictuous
+        square.conflict = true
       }
     });
-    //the squares without pieces
+    //if helpMode is set, we mark the conflict empty squares
     if(this.state.helpMode === true) {
       const emptySquares = newSquares.filter(({hasPiece}) => hasPiece === false)
         pieceSquares.forEach(square => {
-          this.markBusySquares(square, emptySquares);
+          this.markForbiddenSquares(square, emptySquares);
         });
     }
     this.setState({squares:newSquares})
@@ -94,11 +113,12 @@ class ChessBoardGame extends Component {
       (otherSquare.id !== square.id) && this.conflictCondition(square, otherSquare)
   )
 
-  markBusySquares = (square, emptySquares) =>
+  markForbiddenSquares = (square, emptySquares) =>
     emptySquares.map((otherSquare) => {
       if(this.conflictCondition(square, otherSquare)) {
         otherSquare.valid = false;
       }
+      return otherSquare;
     }
   )
 
@@ -116,6 +136,36 @@ class ChessBoardGame extends Component {
     }
   }
 
+  automaticSolution = (squares) => {
+    //we reset squares
+    this.resetSquares(squares)
+    this.addPiece (squares)
+  }
+
+  //recursive
+  addPiece =  (squares) => {
+    const pieceSquares = squares.filter(({hasPiece}) => hasPiece === true)
+    const emptySquares = squares.filter(({hasPiece}) => hasPiece === false)
+    pieceSquares.forEach((square) => {
+      this.markForbiddenSquares(square, emptySquares);
+    });
+    const validSquares = emptySquares.filter(square => (square.valid === true))
+    if(validSquares.length > 0) {
+        const square = getRandomElement(validSquares)
+        square.hasPiece = true
+        this.addPiece (squares)
+    } else {
+        //console.log(pieceSquares.length)
+        if(pieceSquares.length < getMax(this.state.pieceType)) {
+          this.automaticSolution(squares);
+        } else {
+          this.setState(prevState => ({squares:squares, helpMode:prevState.helpMode}),
+             () => {this.handleSquareClick()}
+          )
+        }
+    }
+  }
+
   render() {
     return (
       <div>
@@ -127,8 +177,10 @@ class ChessBoardGame extends Component {
             <ResetButton
               resetChessBoard={this.resetChessBoard} />
             <HelpButton
-              help={this.help} 
+              help={this.help}
               status = {this.state.helpMode ? "active" : ""}/>
+            {this.state.pieceType === this.chessmen.queen ? <SolutionButton
+              getRandomSolution={this.getRandomSolution} /> : ""}
        </section>
        <section><ChessBoard
            squares={this.state.squares}

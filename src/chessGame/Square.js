@@ -11,7 +11,7 @@ import {getSymbol} from "./common"
 
 
 const Square = ({col, row, color, pieceType, hasPiece, conflict, valid, id, onClick }) => (
-  <div className={`square ${color} ${conflict?"red":""}`} onClick={() => onClick(id)}>
+  <div className={`square ${color} ${conflict?"red":""} ${valid?"":"forbidden"}`} onClick={() => onClick(id)}>
     <span>
       
       {valid ? (hasPiece ? getSymbol(pieceType) : "") : "x"}
