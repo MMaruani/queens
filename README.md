@@ -1,8 +1,7 @@
-```
-ChessBoard game made with React
+
+##### ChessBoard game made with React
 
 Démo : [https://clever-meninsky-b6eded.netlify.com/]
-```
 ```
 Is it possible to place 8 queens on the chessboard without them conflicting?
 
