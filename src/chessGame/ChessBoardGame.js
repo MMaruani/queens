@@ -75,7 +75,7 @@ class ChessBoardGame extends Component {
 
   handleSquareClick = (id) =>  {
     //we don't want to mute defaultSate.squares,
-    //so we get o copy of the actual state squares with new referencies
+    //so we get a copy of the actual state squares with new referencies
     const newSquares = this.state.squares.map( square =>  {
       //in order to toggle the piece on click
       let hasPiece = (id !== null && square.id === id) ? !square.hasPiece: square.hasPiece
@@ -105,7 +105,7 @@ class ChessBoardGame extends Component {
 
   sameDiagonale = (square, otherSquare) => (Math.abs(square.col - otherSquare.col) === Math.abs(square.row - otherSquare.row))
   sameColRow =  (square, otherSquare) => (square.col === otherSquare.col ||  square.row === otherSquare.row)
-  knightDist =  (square, otherSquare) => (Math.abs(square.col - otherSquare.col) === 1 && Math.abs(square.row - otherSquare.row) ===2)
+  knightStep =  (square, otherSquare) => (Math.abs(square.col - otherSquare.col) === 1 && Math.abs(square.row - otherSquare.row) ===2)
                                       ||  (Math.abs(square.col - otherSquare.col) === 2 && Math.abs(square.row - otherSquare.row) ===1)
 
   isConflictPiece = (square, pieceSquares) =>
@@ -125,7 +125,7 @@ class ChessBoardGame extends Component {
   conflictCondition = (square, otherSquare) => {
     switch (this.state.pieceType) {
       case this.chessmen.knight :
-          return  this.knightDist(square, otherSquare)
+          return  this.knightStep(square, otherSquare)
       case this.chessmen.rock :
           return  this.sameColRow(square, otherSquare)
       case this.chessmen.bishop :
