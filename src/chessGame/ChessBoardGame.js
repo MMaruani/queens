@@ -14,11 +14,8 @@ import SolutionButton from "./SolutionButton"
 
 import {getRandomElement, getMax} from "./common"
 
-import logo from "./img/queens_icon.png"
-
 
 const SIDE = 8
-
 
 
 class ChessBoardGame extends Component {
@@ -188,10 +185,6 @@ class ChessBoardGame extends Component {
            squares={this.state.squares}
            pieceType={this.state.pieceType}
            handleSquareClick={this.handleSquareClick} />
-       </section>
-       /* we need an image for an external link */
-       <section>
-         <img src={logo} alt="logo" style={{width: 0}}/>
        </section>
        <section>
          <QueensRules/>
