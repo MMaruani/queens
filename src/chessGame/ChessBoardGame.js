@@ -12,6 +12,8 @@ import QueensRules from "./QueensRules"
 
 import SolutionButton from "./SolutionButton"
 
+import ScrollToTopButton from "./ScrollToTopButton"
+
 import {getRandomElement, getMax} from "./common"
 
 
@@ -189,6 +191,9 @@ class ChessBoardGame extends Component {
        <section>
          <QueensRules/>
        </section>
+       <section style={{textAlign:"center"}}>
+         <ScrollToTopButton />
+        </section>
       </div>
     )
   }
