@@ -6,11 +6,11 @@ import gameImg from "./img/chessboard_icon.png"
 
 
 const PieceChoiceButton = () => (
-    <a href="#"
+    <button
         className= "game_button"
         onClick={scrollToTop}>
         <img src={gameImg} alt="sroll to top" style={{width:"50px"}}/>
-    </a>
+    </button>
 )
 
 export default PieceChoiceButton

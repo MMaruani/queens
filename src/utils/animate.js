@@ -1,10 +1,9 @@
 
-window.requestAnimationFrame = (function(callback) {
-    return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame ||
-    function(callback) {
-        window.setTimeout(callback, 1000 / 60);
-    };
-})();
+window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
+                               window.webkitRequestAnimationFrame || window.msRequestAnimationFrame
+
+window.cancelAnimationFrame  = window.cancelAnimationFrame || window.mozCancelAnimationFrame ||
+                               window.webkitCancelAnimationFrame || window.msCancelAnimationFrame
 
 
 export function animate(animFunc, duration, ease) {
@@ -12,13 +11,11 @@ export function animate(animFunc, duration, ease) {
             animationEffect = ease || "easeInOut",
             startTime = new Date().getTime();
 
-    let     requestId = 0,
-            timeSpent, delta;
+    let     requestId, timeSpent, delta;
 
     start();
     function _animate() {
         timeSpent = new Date().getTime() - startTime;
-        //delta = Math.sqrt(time) / sqrt;
         if(animationEffect === "easeInOut") {
             delta = 1/2 + Math.cos(Math.PI * (animationDuration - timeSpent) / (animationDuration)) /2;
         } else if(animationEffect === "easeOut" ) {
@@ -44,6 +41,5 @@ export function animate(animFunc, duration, ease) {
       if (requestId) {
         window.cancelAnimationFrame(requestId);
       }
-      requestId = 0;
     }
 }

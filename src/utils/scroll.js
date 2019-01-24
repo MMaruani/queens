@@ -6,13 +6,13 @@ export function scrollToTop(event) {
 }
 
 export function scrollToPos (scrollEndY, speed) {
-    var scrollInitY = window.scrollY || window.pageYOffset,
-        scrollHeight = scrollEndY - scrollInitY,
-        x = window.scrollX;
+    const scrollInitY = window.scrollY || window.pageYOffset,
+          scrollHeight = scrollEndY - scrollInitY,
+          x = window.scrollX;
 
     animate(function(delta, doAnimate) {
         if(doAnimate) {
             window.scrollTo(x, scrollInitY + (scrollHeight * delta));
         }
-   }, speed);
+    }, speed);
 }
