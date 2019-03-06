@@ -1,5 +1,5 @@
 import React, { Component }  from 'react';
-//import logo from './logo.svg';
+import { hot } from 'react-hot-loader'
 
 //import { BrowserRouter as Router, Route } from 'react-router-dom'
 import './App.css';
@@ -16,4 +16,4 @@ class App extends Component {
   }
 }
 
-export default App
+export default hot(module)(App)
